@@ -40,8 +40,6 @@ function Records() {
 
     return (
         <div>
-            <Link to="/">Back</Link>
-
             <SiteModal open={open} setOpen={setOpen} yesButtonHandler={() => handleDelete(selectedId)}/>
 
             <div className="px-4 sm:px-6 lg:px-8">

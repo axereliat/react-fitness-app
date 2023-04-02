@@ -3,6 +3,9 @@ import toastr from 'toastr'
 import {useEffect, useState} from "react";
 import {createRecord, fetchActivities} from "../utils/Requester.js";
 import SiteModal from "./ConfirmationModal.jsx";
+import SubmitButton from "./ui/SubmitButton.jsx";
+import FormLabel from "./ui/FormLabel.jsx";
+import FormInput from "./ui/FormInput.jsx";
 
 function CreateRecord() {
     const [loadingMsg, setLoadingMsg] = useState('');
@@ -47,7 +50,6 @@ function CreateRecord() {
 
     return (
         <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
-            <Link to="/records">Back</Link>
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
                     {loadingMsg ? (
@@ -55,43 +57,33 @@ function CreateRecord() {
                     ) : (
                         <form className="space-y-6" onSubmit={submitHandler}>
                             <div>
-                                <label htmlFor="username"
-                                       className="block text-sm font-medium leading-6 text-gray-900">
-                                    Reps
-                                </label>
+                                <FormLabel htmlFor="reps">Reps</FormLabel>
                                 <div className="mt-2">
-                                    <input type="text"
-                                           id="reps"
-                                           name="reps"
-                                           value={reps}
-                                           onChange={e => setReps(e.target.value)}
-                                           required
-                                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    <FormInput
+                                        type="text"
+                                        id="reps"
+                                        name="reps"
+                                        value={reps}
+                                        onChange={e => setReps(e.target.value)}
+                                        required={true}
                                     />
                                 </div>
                             </div>
                             <div>
-                                <label htmlFor="password"
-                                       className="block text-sm font-medium leading-6 text-gray-900">
-                                    Sets
-                                </label>
+                                <FormLabel htmlFor="sets">Sets</FormLabel>
                                 <div className="mt-2">
-                                    <input type="text"
-                                           id="sets"
-                                           name="sets"
-                                           value={sets}
-                                           onChange={e => setSets(e.target.value)}
-                                           autoComplete="current-password"
-                                           required
-                                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    <FormInput
+                                        type="text"
+                                        id="sets"
+                                        name="sets"
+                                        value={sets}
+                                        onChange={e => setSets(e.target.value)}
+                                        required={true}
                                     />
                                 </div>
                             </div>
                             <div>
-                                <label htmlFor="location"
-                                       className="block text-sm font-medium leading-6 text-gray-900">
-                                    Activity
-                                </label>
+                                <FormLabel htmlFor="activity">Activity</FormLabel>
                                 <select
                                     id="activity"
                                     name="activity"
@@ -105,10 +97,7 @@ function CreateRecord() {
                                 </select>
                             </div>
                             <div>
-                                <button type="submit"
-                                        className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                                    Add
-                                </button>
+                                <SubmitButton>Add</SubmitButton>
                             </div>
                         </form>
                     )}
