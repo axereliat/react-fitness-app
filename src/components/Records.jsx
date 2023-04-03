@@ -96,6 +96,11 @@ function Records() {
                                             {record.reps}
                                         </td>
                                         <td>
+                                            <Link to={'/records/edit/' + record.id}
+                                                    className="text-indigo-600 hover:text-indigo-900">
+                                                Edit
+                                            </Link>
+                                            {' '}
                                             <button onClick={() => openModal(record.id)}
                                                     className="text-indigo-600 hover:text-indigo-900">
                                                 Delete

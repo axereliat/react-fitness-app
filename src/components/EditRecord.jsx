@@ -1,10 +1,10 @@
-import {Navigate} from "react-router-dom";
+import {Navigate, useParams} from "react-router-dom";
 import toastr from 'toastr'
 import {useEffect, useState} from "react";
-import {createRecord, fetchActivities} from "../utils/Requester.js";
+import {createRecord, fetchActivities, getRecord, updateRecord} from "../utils/Requester.js";
 import RecordForm from "./ui/RecordForm";
 
-function CreateRecord() {
+function EditRecord() {
     const [loadingMsg, setLoadingMsg] = useState('');
     const [reps, setReps] = useState(0);
     const [sets, setSets] = useState(0);
@@ -12,11 +12,24 @@ function CreateRecord() {
     const [activity, setActivity] = useState('');
     const [newRecord, setNewRecord] = useState(false);
 
+    const { id } = useParams();
+
     useEffect(() => {
         fetchActivities()
             .then(res => {
                 setActivities(res.data);
                 setActivity(res.data[0].id);
+                getRecord(id)
+                    .then(res => {
+                        const record = res.data;
+                        console.log(record);
+                        setReps(record.reps);
+                        setSets(record.sets);
+                        setActivity(record.dailyActivity.id);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
             })
             .catch(err => {
                 console.log(err);
@@ -31,10 +44,10 @@ function CreateRecord() {
             return;
         }
 
-        createRecord(sets, reps, activity)
+        updateRecord(id, sets, reps, activity)
             .then(res => {
                 setNewRecord(true);
-                toastr.success('Your record was successfully added');
+                toastr.success('Your record was successfully updated');
             })
             .catch(err => {
                 console.log(err);
@@ -52,7 +65,7 @@ function CreateRecord() {
                     {loadingMsg ? (
                         <div>{loadingMsg}</div>
                     ) : (
-                        <RecordForm {...{buttonText: 'create', submitHandler, reps, setReps, sets, setSets, setActivity, activities}} />
+                        <RecordForm {...{buttonText: 'update', submitHandler, reps, setReps, sets, setSets, activity, setActivity, activities}} />
                     )}
                 </div>
             </div>
@@ -60,4 +73,4 @@ function CreateRecord() {
     );
 }
 
-export default CreateRecord;
+export default EditRecord;
